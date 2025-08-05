@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDDIC Sales Plan: Alben Landscapes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Slate & Amber -->
+    <!-- Application Structure Plan: A tab-based navigation system is used to create a dashboard-like feel. This structure was chosen to break down the dense sales plan into manageable, thematic sections (Overview, MEDDIC, Stakeholders, Action Plan), allowing users to quickly access specific information without overwhelming them. This non-linear approach enhances usability by letting the user explore the plan based on their immediate needs, which is more effective than a linear document for a dynamic sales process. -->
+    <!-- Visualization & Content Choices: 
+        - Report Info: Metrics -> Goal: Compare/Inform -> Viz: Bar Chart (Chart.js) -> Interaction: Hover for details -> Justification: Visually represents potential ROI, making it more impactful than a list.
+        - Report Info: Stakeholders -> Goal: Organize/Relationships -> Viz: Interactive HTML/CSS Cards -> Interaction: Click to reveal details -> Justification: Creates an engaging way to explore key players and their motivations, superior to a static table.
+        - Report Info: Decision Process -> Goal: Change/Organize -> Viz: Numbered HTML/CSS timeline -> Interaction: None -> Justification: Clearly visualizes the sequence of events in the sales process.
+        - Report Info: Pain Points/Decision Criteria -> Goal: Inform/Organize -> Viz: Accordion-style HTML/CSS list -> Interaction: Click to expand/collapse -> Justification: Manages information density, allowing users to focus on one area at a time.
+        - Report Info: Action Plan -> Goal: Inform -> Viz: Tabbed content for Email/LinkedIn -> Interaction: Click tabs -> Justification: Neatly separates different outreach strategies.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+        }
+        .tab-active {
+            border-bottom-color: #f59e0b; /* amber-500 */
+            color: #0f172a; /* slate-900 */
+            font-weight: 600;
+        }
+        .tab-inactive {
+            border-bottom-color: transparent;
+            color: #64748b; /* slate-500 */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 350px;
+            max-height: 400px;
+        }
+        .stakeholder-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .stakeholder-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-in-out;
+        }
+    </style>
+</head>
+<body class="text-slate-800">
+
+    <div class="container mx-auto p-4 md:p-8 max-w-7xl">
+        
+        <header class="mb-8">
+            <h1 class="text-3xl md:text-4xl font-bold text-slate-900">MEDDIC Sales Plan</h1>
+            <p class="text-lg text-slate-600 mt-1">Target: <span class="font-semibold">Alben Landscapes Limited</span> | Solution: <span class="font-semibold">BigChange</span></p>
+        </header>
+
+        <div class="border-b border-slate-200 mb-8">
+            <nav class="-mb-px flex space-x-6" aria-label="Tabs">
+                <button class="tab-active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="overview">Overview</button>
+                <button class="tab-inactive whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="meddic">MEDDIC Framework</button>
+                <button class="tab-inactive whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="stakeholders">Stakeholders</button>
+                <button class="tab-inactive whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-tab="action-plan">Action Plan</button>
+            </nav>
+        </div>
+
+        <main>
+            <div id="overview" class="content-section active">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Strategic Overview</h2>
+                    <p class="text-slate-600 leading-relaxed">
+                        This interactive dashboard outlines a strategic sales plan for engaging with Alben Landscapes Limited. The goal is to position **BigChange** as the essential field service management solution to drive their growth and operational efficiency. The plan is structured using the MEDDIC sales methodology to ensure a comprehensive and targeted approach. Use the tabs above to navigate through the different components of the plan, from understanding their key business metrics to identifying the primary decision-makers and crafting a compelling action plan.
+                    </p>
+                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-slate-500">Company</p>
+                            <p class="text-lg font-semibold text-slate-800">Alben Landscapes Ltd.</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-slate-500">Industry</p>
+                            <p class="text-lg font-semibold text-slate-800">Commercial Landscaping</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-lg">
+                            <p class="text-sm font-medium text-slate-500">Key Service</p>
+                            <p class="text-lg font-semibold text-slate-800">Grounds Maintenance & Gritting</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="meddic" class="content-section">
+                <div class="space-y-8">
+                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">M - Metrics: Quantifiable Results</h3>
+                        <p class="text-slate-600 mb-6">This chart visualizes the key performance indicators (KPIs) we can improve for Alben Landscapes. Hover over each bar to see the specific value BigChange can deliver, helping to build a strong business case based on tangible outcomes like increased job capacity and reduced operational costs.</p>
+                        <div class="chart-container">
+                            <canvas id="metricsChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">I - Identify Pain: Operational Challenges</h3>
+                            <p class="text-slate-600 mb-6">These are the likely operational pains Alben Landscapes faces. Click each point to expand and understand the challenges that BigChange is perfectly positioned to solve, from manual scheduling to a lack of real-time visibility.</p>
+                            <div id="pain-points-accordion" class="space-y-2"></div>
+                        </div>
+                        <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">D - Decision Criteria</h3>
+                             <p class="text-slate-600 mb-6">This section outlines the criteria Alben will likely use to evaluate our solution. Understanding these factors—from ease of use to ROI—is critical for tailoring our demonstrations and proposals to meet their specific needs.</p>
+                            <ul id="decision-criteria-list" class="space-y-3"></ul>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold text-slate-900 mb-4">D - Decision Process</h3>
+                        <p class="text-slate-600 mb-6">This timeline illustrates the expected decision-making process at Alben Landscapes. Recognizing these stages, from initial research to final approval by the key directors, allows us to align our sales activities for maximum impact at each step.</p>
+                        <div id="decision-process-timeline" class="mt-4"></div>
+                    </div>
+
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">E - Economic Buyer</h3>
+                            <p class="text-slate-600 mb-2">The individual with final budget authority. As a family-run business, this is likely a consensus decision, but these directors are the primary targets.</p>
+                            <div class="space-y-4 mt-4">
+                                <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded-r-lg">
+                                    <p class="font-bold text-slate-800">Primary Target: Ben Ashworth</p>
+                                    <p class="text-sm text-slate-600">Co-Director with strong financial and strategic oversight.</p>
+                                </div>
+                                <div class="bg-slate-50 border-l-4 border-slate-400 p-4 rounded-r-lg">
+                                    <p class="font-semibold text-slate-800">Secondary: Oliver & Simon Ashworth</p>
+                                    <p class="text-sm text-slate-600">Co-Directors involved in operational and reputational impact.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                            <h3 class="text-xl font-bold text-slate-900 mb-4">C - Champion</h3>
+                            <p class="text-slate-600 mb-2">Our internal advocate who feels the pain of the current system and will help drive the change.</p>
+                             <div class="space-y-4 mt-4">
+                                <div class="bg-sky-50 border-l-4 border-sky-500 p-4 rounded-r-lg">
+                                    <p class="font-bold text-slate-800">Potential Champion Profile</p>
+                                    <p class="text-sm text-slate-600">An Office Manager, Project Manager, or Senior Field Leader responsible for daily scheduling and administration. We must identify and empower this individual.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="stakeholders" class="content-section">
+                <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Stakeholder Influence Map</h2>
+                    <p class="text-slate-600 mb-8">This map identifies the key players at Alben Landscapes. Click on each card to reveal their role, influence level, and primary motivations. Understanding this landscape is crucial for navigating the organization and tailoring our messaging to resonate with each stakeholder's priorities.</p>
+                    <div id="stakeholder-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    </div>
+                </div>
+            </div>
+
+            <div id="action-plan" class="content-section">
+                 <div class="bg-white p-6 md:p-8 rounded-lg shadow-sm">
+                    <h2 class="text-2xl font-bold text-slate-900 mb-4">Action Plan & Value Proposition</h2>
+                    <p class="text-slate-600 mb-6">This section provides a concrete outreach strategy. It includes tailored messaging for LinkedIn and a multi-step email sequence designed to capture attention and build interest. The initial value propositions are crafted to address Alben's specific needs and business context directly.</p>
+                    
+                    <div class="mb-6 border-b border-gray-200">
+                        <nav class="-mb-px flex space-x-4" aria-label="Tabs">
+                            <button class="action-tab-active whitespace-nowrap py-3 px-1 border-b-2 font-semibold text-sm" data-action-tab="propositions">Value Propositions</button>
+                            <button class="action-tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-action-tab="linkedin">LinkedIn Strategy</button>
+                            <button class="action-tab-inactive whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" data-action-tab="email">Email Sequence</button>
+                        </nav>
+                    </div>
+
+                    <div id="propositions" class="action-content-section active">
+                        <div class="space-y-4">
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="text-slate-700">"BigChange helps family-run businesses like Alben Landscapes to manage their entire operation from a single platform, enabling them to scale their services while maintaining their commitment to quality and efficiency."</p>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="text-slate-700">"We can help you eliminate the administrative burden of paperwork, so your office staff can focus on growth and your field teams can spend more time on billable work."</p>
+                            </div>
+                             <div class="bg-slate-50 p-4 rounded-lg">
+                                <p class="text-slate-700">"By giving you real-time visibility into your entire operation, BigChange ensures you can respond to client needs instantly, reinforcing your reputation for exceptional service, especially for your 24/7 gritting operations."</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="linkedin" class="action-content-section">
+                        <ul class="space-y-4 list-disc list-inside text-slate-600">
+                            <li><span class="font-semibold text-slate-800">Connection:</span> Send personalized connection requests to Ben, Oliver, and Simon Ashworth.</li>
+                            <li><span class="font-semibold text-slate-800">Messaging:</span> Reference their reputation for quality and service, and mention how BigChange enhances that reputation through technology.</li>
+                            <li><span class="font-semibold text-slate-800">Content:</span> Share success stories of other commercial landscaping businesses using BigChange to improve efficiency.</li>
+                        </ul>
+                    </div>
+                    <div id="email" class="action-content-section">
+                        <div class="space-y-4">
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Email 1: A thought on Alben Landscapes' growth</h4>
+                                <p class="text-slate-600 text-sm">Acknowledge their success. Ask how they plan to scale operations while maintaining service quality. Offer a 15-min call to share insights.</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Email 2: Improving field team efficiency</h4>
+                                <p class="text-slate-600 text-sm">Focus on the pain of manual scheduling. Introduce the all-in-one platform concept. Value Prop: "Eliminate paperwork and get a live overview of your entire operation."</p>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-slate-800">Email 3: Case Study: [Company] improved profitability</h4>
+                                <p class="text-slate-600 text-sm">Share a relevant case study. Highlight specific metrics like reduced travel time or faster invoicing.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('[data-tab]');
+    const contentSections = document.querySelectorAll('.content-section');
+    const actionTabs = document.querySelectorAll('[data-action-tab]');
+    const actionContentSections = document.querySelectorAll('.action-content-section');
+
+    const painPoints = [
+        { title: 'Manual Scheduling', content: 'Using spreadsheets or non-integrated systems leads to scheduling conflicts, inefficient routing, and wasted time.' },
+        { title: 'Lack of Real-Time Visibility', content: 'Directors lack a live overview of where teams are, job progress, and challenges faced in the field.' },
+        { title: 'Paper-Based Processes', content: 'Paper job sheets, work orders, and reports are slow, prone to errors, and create administrative bottlenecks.' },
+        { title: 'Difficult Reporting', content: 'Generating accurate reports on job profitability, team performance, or customer service metrics requires significant manual effort.' },
+        { title: 'Inconsistent Data', content: 'Job data, customer information, and invoicing details are likely scattered across multiple, disconnected platforms.' }
+    ];
+
+    const decisionCriteria = [
+        { icon: '&#x1F4BB;', text: 'Ease of Use for all field and office staff.' },
+        { icon: '&#x1F4F1;', text: 'Powerful and intuitive mobile functionality.' },
+        { icon: '&#x1F4B0;', text: 'Clear Return on Investment (ROI).' },
+        { icon: '&#x1F6E0;&#xFE0F;', text: 'Smooth implementation and responsive support.' },
+        { icon: '&#x1F500;', text: 'Integration with existing accounting software.' }
+    ];
+
+    const decisionProcess = [
+        'Initial Research: A key stakeholder identifies a pain point and researches solutions.',
+        'Internal Discussion: The idea is discussed among directors to gauge interest.',
+        'Discovery Call/Demo: A tailored demonstration follows a successful discovery call.',
+        'Proof of Value: A trial or detailed ROI proposal may be requested.',
+        'Final Approval: The decision is made by the key directors after a final review.'
+    ];
+
+    const stakeholders = [
+        { name: 'Ben Ashworth', role: 'Co-Director, Economic Buyer', influence: 'High', motivation: 'Motivated by profitability, growth, and efficiency. Makes strategic and financial decisions.', color: 'amber' },
+        { name: 'Oliver James Ashworth', role: 'Co-Director', influence: 'High', motivation: 'Likely involved in daily operations and team management. Motivated by operational excellence.', color: 'slate' },
+        { name: 'Simon Andrew Ashworth', role: 'Co-Director', influence: 'High', motivation: 'Involved in the business\'s overall success. Motivated by customer satisfaction and reputation.', color: 'slate' },
+        { name: 'Field Team Leaders', role: 'Operational Managers', influence: 'Medium', motivation: 'Directly impacted by the solution. Can become champions by highlighting mobile app benefits.', color: 'sky' },
+        { name: 'Office Staff', role: 'Admin & Scheduling', influence: 'High', motivation: 'Primary users. Will benefit most from reduced administrative work and streamlined processes.', color: 'sky' }
+    ];
+
+    function initTabs(tabElements, contentElements, activeClass, inactiveClass) {
+        tabElements.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabElements.forEach(t => {
+                    t.classList.remove(...activeClass.split(' '));
+                    t.classList.add(...inactiveClass.split(' '));
+                });
+                tab.classList.add(...activeClass.split(' '));
+                tab.classList.remove(...inactiveClass.split(' '));
+
+                const target = tab.dataset.tab || tab.dataset.actionTab;
+                contentElements.forEach(section => {
+                    if (section.id === target) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            });
+        });
+    }
+
+    initTabs(tabs, contentSections, 'tab-active', 'tab-inactive');
+    initTabs(actionTabs, actionContentSections, 'action-tab-active', 'action-tab-inactive');
+
+    function populatePainPoints() {
+        const accordionContainer = document.getElementById('pain-points-accordion');
+        painPoints.forEach((item, index) => {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'border border-slate-200 rounded-lg';
+            wrapper.innerHTML = `
+                <button class="accordion-toggle w-full flex justify-between items-center p-4 text-left font-medium text-slate-800 hover:bg-slate-50">
+                    <span>${item.title}</span>
+                    <span class="transform transition-transform duration-300">&#x25BC;</span>
+                </button>
+                <div class="accordion-content">
+                    <p class="p-4 pt-0 text-slate-600">${item.content}</p>
+                </div>
+            `;
+            accordionContainer.appendChild(wrapper);
+        });
+
+        document.querySelectorAll('.accordion-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const arrow = button.querySelector('span:last-child');
+                if (content.style.maxHeight) {
+                    content.style.maxHeight = null;
+                    arrow.style.transform = 'rotate(0deg)';
+                } else {
+                    document.querySelectorAll('.accordion-content').forEach(c => c.style.maxHeight = null);
+                    document.querySelectorAll('.accordion-toggle span:last-child').forEach(a => a.style.transform = 'rotate(0deg)');
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    arrow.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+    }
+
+    function populateDecisionCriteria() {
+        const listContainer = document.getElementById('decision-criteria-list');
+        decisionCriteria.forEach(item => {
+            const li = document.createElement('li');
+            li.className = 'flex items-start bg-slate-50 p-3 rounded-lg';
+            li.innerHTML = `
+                <span class="text-xl text-amber-500 mr-3">${item.icon}</span>
+                <span class="text-slate-700">${item.text}</span>
+            `;
+            listContainer.appendChild(li);
+        });
+    }
+
+    function populateDecisionProcess() {
+        const timelineContainer = document.getElementById('decision-process-timeline');
+        const list = document.createElement('ol');
+        list.className = 'relative border-l border-slate-200';
+        decisionProcess.forEach((item, index) => {
+            const li = document.createElement('li');
+            li.className = 'mb-6 ml-6';
+            li.innerHTML = `
+                <span class="absolute flex items-center justify-center w-6 h-6 bg-amber-100 rounded-full -left-3 ring-4 ring-white">
+                    <span class="font-bold text-amber-600">${index + 1}</span>
+                </span>
+                <p class="text-slate-700">${item}</p>
+            `;
+            list.appendChild(li);
+        });
+        timelineContainer.appendChild(list);
+    }
+
+    function populateStakeholders() {
+        const gridContainer = document.getElementById('stakeholder-grid');
+        stakeholders.forEach(stakeholder => {
+            const card = document.createElement('div');
+            card.className = `stakeholder-card bg-white p-5 rounded-lg border-l-4 border-${stakeholder.color}-500 shadow-sm cursor-pointer`;
+            card.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h4 class="font-bold text-lg text-slate-900">${stakeholder.name}</h4>
+                        <p class="text-sm text-slate-500">${stakeholder.role}</p>
+                    </div>
+                    <span class="text-xs font-semibold px-2 py-1 rounded-full bg-${stakeholder.color}-100 text-${stakeholder.color}-700">${stakeholder.influence} Influence</span>
+                </div>
+                <div class="motivation-content mt-4 text-slate-600 text-sm" style="display: none;">
+                    <p>${stakeholder.motivation}</p>
+                </div>
+            `;
+            card.addEventListener('click', () => {
+                const motivation = card.querySelector('.motivation-content');
+                motivation.style.display = motivation.style.display === 'none' ? 'block' : 'none';
+            });
+            gridContainer.appendChild(card);
+        });
+    }
+
+    function renderMetricsChart() {
+        const ctx = document.getElementById('metricsChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Increase Job Capacity', 'Improve Cash Flow', 'Enhance Customer Satisfaction', 'Reduce Operational Costs'],
+                datasets: [{
+                    label: 'Potential Improvement',
+                    data: [18, 25, 30, 15],
+                    backgroundColor: [
+                        'rgba(59, 130, 246, 0.6)',
+                        'rgba(245, 158, 11, 0.6)',
+                        'rgba(16, 185, 129, 0.6)',
+                        'rgba(239, 68, 68, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(245, 158, 11, 1)',
+                        'rgba(16, 185, 129, 1)',
+                        'rgba(239, 68, 68, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                let label = context.dataset.label || '';
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.x !== null) {
+                                    label += `~${context.parsed.x}% Improvement`;
+                                }
+                                return label;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Estimated % Improvement'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    populatePainPoints();
+    populateDecisionCriteria();
+    populateDecisionProcess();
+    populateStakeholders();
+    renderMetricsChart();
+});
+</script>
+
+</body>
+</html>
